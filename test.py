@@ -1,5 +1,8 @@
-import surfshop
 import unittest
+import surfshop
+import datetime
+
+
 
 class SurfShopTest(unittest.TestCase):
     def setUp(self):
@@ -17,4 +20,17 @@ class SurfShopTest(unittest.TestCase):
                 self.assertEqual(message, f'Successfully add {i} surfboards to cart!')
                 self.cart = surfshop.ShoppingCart()
 
+    @unittest.skip
+    def test_add_too_many_surfboards(self):
+        self.assertRaises(surfshop.TooManyBoardsError, self.cart.add_surfboards, 5)
+
+    
+    def test_apply_locals_discount(self):
+        self.cart.apply_locals_discount()
+        self.assertTrue(self.cart.locals_discount)
+
+    def test_add_invalid_checkout_date(self):
+        date=datetime.datetime.now(
+            self.assertRaises(surfshop.CheckoutDateError, self.cart.set_checkout_date, date)
+        )
 unittest.main()
